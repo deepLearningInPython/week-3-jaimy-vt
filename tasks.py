@@ -16,7 +16,7 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
+  return(len(input_array) - len(kernel_array) + 1)
 
 
 # -----------------------------------------------
@@ -35,9 +35,17 @@ print(compute_output_size_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def convolve_1d(input_array, kernel_array):
-    # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
-    # Then fill the cells in the array with a loop.
-    pass
+   output = list()
+   length = compute_output_size_1d(input_array, kernel_array)
+  
+   for n in range(length):
+     convolution =  np.sum(input_array[n:n + len(kernel_array)] * kernel_array)
+     output.append(convolution)
+  
+   return(output)
+
+# Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
+# Then fill the cells in the array with a loop.
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
@@ -56,7 +64,11 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
+    height = len(input_matrix) - len(kernel_matrix) + 1
+    width = len(input_matrix[0]) - len(kernel_matrix[0]) + 1
+    
+    output = (height, width)
+    return(output)
 
 
 # -----------------------------------------------
@@ -70,9 +82,18 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 # Your code here:
 # -----------------------------------------------
 def convolute_2d(input_matrix, kernel_matrix):
-    # Tip: same tips as above, but you might need a nested loop here in order to
-    # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
+  output_dim = compute_output_size_2d(input_matrix, kernel_matrix)
+  output = np.empty((output_dim))
+  
+  for i in range(output_dim[0]):
+    for j in range(output_dim[1]):
+      mini_matrix = input_matrix[i:i + len(kernel_matrix), j:j + len(kernel_matrix[0])]
+      
+      convolution = np.sum(mini_matrix * kernel_matrix)
+      
+      output[i, j] = convolution
+
+  return(output)
 
 
 # -----------------------------------------------
